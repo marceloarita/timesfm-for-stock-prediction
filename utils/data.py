@@ -7,34 +7,34 @@ import os
 import pandas as pd
 import yfinance as yf
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
+RAW_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "raw")
 
 
 def load_stock(ticker: str, start: str = "2015-01-01", end: str = "2024-12-31", force_download: bool = False) -> pd.DataFrame:
     """
-    Baixa dados históricos de um ticker via yfinance e salva em CSV.
-    Na segunda chamada, carrega do CSV local (mais rápido).
+    Downloads historical stock data via yfinance and caches it locally.
+    On subsequent calls, loads from the local CSV cache (faster).
 
-    Retorna um DataFrame com índice DatetimeIndex e colunas OHLCV.
+    Returns a DataFrame with DatetimeIndex and OHLCV columns.
     """
-    os.makedirs(DATA_DIR, exist_ok=True)
-    cache_path = os.path.join(DATA_DIR, f"{ticker}_{start}_{end}.csv")
+    os.makedirs(RAW_DIR, exist_ok=True)
+    cache_path = os.path.join(RAW_DIR, f"{ticker}_{start}_{end}.csv")
 
     if os.path.exists(cache_path) and not force_download:
         df = pd.read_csv(cache_path, index_col=0, parse_dates=True)
-        print(f"[data] Carregado do cache: {cache_path} ({len(df)} linhas)")
+        print(f"[data] Loaded from cache: {cache_path} ({len(df)} rows)")
         return df
 
-    print(f"[data] Baixando {ticker} de {start} até {end}...")
+    print(f"[data] Downloading {ticker} from {start} to {end}...")
     raw = yf.download(ticker, start=start, end=end, auto_adjust=True, progress=False)
 
-    # yfinance pode retornar MultiIndex nas colunas — achata se necessário
+    # yfinance may return MultiIndex columns — flatten if needed
     if isinstance(raw.columns, pd.MultiIndex):
         raw.columns = raw.columns.get_level_values(0)
 
     raw.index.name = "Date"
     raw.to_csv(cache_path)
-    print(f"[data] Salvo em: {cache_path} ({len(raw)} linhas)")
+    print(f"[data] Saved to: {cache_path} ({len(raw)} rows)")
     return raw
 
 
