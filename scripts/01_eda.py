@@ -100,17 +100,39 @@ for year, ret in annual_return.items():
     marker = " <- BEST" if year == best_year else (" <- WORST" if year == worst_year else "")
     print(f"  {year}: {ret:+.1f}%{marker}")
 
+# Cumulative return: if you invested USD 100 at the start of each year,
+# how much would you have by the end of that year — compounding over time?
+cumulative = (1 + annual_return / 100).cumprod() * 100
+
 colors = ["seagreen" if r > 0 else "tomato" for r in annual_return.values]
-fig, ax = plt.subplots(figsize=(12, 4))
-bars = ax.bar(annual_return.index, annual_return.values, color=colors, edgecolor="white")
-ax.axhline(0, color="black", linewidth=0.8)
-ax.set_title("AAPL — Annual Return (%)")
-ax.set_ylabel("%")
-ax.set_xticks(annual_return.index)
+
+fig, (ax_top, ax_bot) = plt.subplots(2, 1, figsize=(12, 7), sharex=True,
+                                      gridspec_kw={"height_ratios": [1, 1.2]})
+fig.suptitle("AAPL — Annual Performance (2016–2024)", fontsize=12, y=1.01)
+
+# Top: cumulative return line
+ax_top.plot(cumulative.index, cumulative.values, color="#7BAFD4", linewidth=1.5, marker="o",
+            markersize=4, zorder=3)
+ax_top.fill_between(cumulative.index, 100, cumulative.values,
+                    where=cumulative.values >= 100, alpha=0.15, color="seagreen")
+ax_top.fill_between(cumulative.index, 100, cumulative.values,
+                    where=cumulative.values < 100, alpha=0.15, color="tomato")
+ax_top.axhline(100, color="#A8A8A8", linewidth=0.8, linestyle="--")
+ax_top.set_ylabel("Cumulative (Base = 100)")
+ax_top.grid(axis="y", alpha=0.3)
+for x, y in zip(cumulative.index, cumulative.values):
+    ax_top.text(x, y + 8, f"{y:.0f}", ha="center", fontsize=7.5, color="#404040")
+
+# Bottom: annual return bars
+bars = ax_bot.bar(annual_return.index, annual_return.values, color=colors, edgecolor="white", width=0.6)
+ax_bot.axhline(0, color="#404040", linewidth=0.8)
+ax_bot.set_ylabel("Annual Return (%)")
+ax_bot.set_xticks(annual_return.index)
+ax_bot.grid(axis="y", alpha=0.3)
 for bar, val in zip(bars, annual_return.values):
-    ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + (1 if val > 0 else -3),
-            f"{val:+.0f}%", ha="center", fontsize=8)
-ax.grid(axis="y", alpha=0.3)
+    ax_bot.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + (1 if val > 0 else -3.5),
+                f"{val:+.0f}%", ha="center", fontsize=8, color="#404040")
+
 plt.tight_layout()
 plt.savefig(os.path.join(CHARTS_DIR, "01_3_annual_return.png"), dpi=150)
 plt.show()
