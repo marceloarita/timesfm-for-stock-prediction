@@ -60,6 +60,23 @@ plt.show()
 # COVID had two distinct phases visible in the chart:
 #   - Crash:    Feb 15 → Mar 23, 2020 — AAPL lost ~30% in 5 weeks
 #   - Recovery: Mar 23 → Dec 31, 2020 — AAPL more than doubled from the bottom
+#
+# Why did AAPL crash?
+#   1. General panic — investors sold everything indiscriminately, not Apple-specific
+#   2. Factories closed in China — Foxconn (Apple's main manufacturer) shut down in Zhengzhou.
+#      Apple issued an official statement warning it would miss its quarterly revenue guidance —
+#      one of the first major corporate COVID alerts.
+#   3. Fear of demand collapse — the iPhone is a non-essential consumer good.
+#      With economic uncertainty, the expectation was that people would stop buying.
+#
+# Why did it recover so fast — and go even higher?
+#   4. Remote work accelerated tech demand — Mac, iPad, and AirPods sales surged.
+#      People at home needed equipment, and Apple was best positioned to capture that.
+#   5. Fed cut rates to near-zero — with fixed income yielding almost nothing,
+#      money flooded into equities. Big tech was the preferred destination.
+#      (explored in detail in 01_eda_fed_rates.py)
+#   6. Apple became a "safe haven" within tech — USD 200B in cash, minimal debt.
+#      In crises, investors concentrate in companies that will clearly survive.
 COVID_PHASES = {
     "COVID Crash\n(Feb–Mar 2020)": ("2020-02-15", "2020-03-23", "tomato"),
     "Post-COVID Recovery\n(Mar–Dec 2020)": ("2020-03-23", "2020-12-31", "seagreen"),
