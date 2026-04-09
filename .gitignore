@@ -207,6 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 # Project-specific
-data/*.csv
-data/*.png
+data/**/*.csv
+data/**/*.png
+data/.DS_Store
 *.png
