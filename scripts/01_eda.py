@@ -26,7 +26,7 @@ CHARTS_DIR    = os.path.join(os.path.dirname(__file__), "..", "data", "charts")
 PROCESSED_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "processed")
 
 ticker = "AAPL"
-df = load_stock(ticker, start="2015-01-01", end="2024-12-31")
+df = load_stock(ticker, start="2015-01-01", end="2025-12-31")
 close = df["Close"]
 
 # =============================================================================
@@ -42,7 +42,7 @@ close = df["Close"]
 
 fig, ax = plt.subplots(figsize=(14, 5))
 ax.plot(close.index, close.values, linewidth=1, color="steelblue")
-ax.set_title("AAPL — Closing Price (2015–2024)")
+ax.set_title("AAPL — Closing Price (2015–2025)")
 ax.set_ylabel("USD")
 ax.set_xlabel("Date")
 ax.xaxis.set_major_locator(mdates.YearLocator())
@@ -55,7 +55,7 @@ plt.savefig(os.path.join(CHARTS_DIR, "01_1_closing_price.png"), dpi=150)
 plt.show()
 
 
-# -----------------------------------------------------------------------------
+# -------------------------------------`----------------------------------------
 # 1.2 What were the major bull and bear periods?
 # -----------------------------------------------------------------------------
 # We highlight the most significant macroeconomic events visible in the chart.

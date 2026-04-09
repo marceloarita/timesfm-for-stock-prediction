@@ -52,7 +52,7 @@ TECH_COLORS = {
 # ---------------------------------------------------------------------------
 # Load data
 # ---------------------------------------------------------------------------
-close = get_close("AAPL", start="2015-01-01", end="2024-12-31")
+close = get_close("AAPL", start="2015-01-01", end="2025-12-31")
 
 url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=FEDFUNDS"
 fed = pd.read_csv(
@@ -60,7 +60,7 @@ fed = pd.read_csv(
     parse_dates=["observation_date"],
     index_col="observation_date",
 )
-fed = fed.loc["2015-01-01":"2024-12-31"].rename(columns={"FEDFUNDS": "rate"})
+fed = fed.loc["2015-01-01":"2025-12-31"].rename(columns={"FEDFUNDS": "rate"})
 
 # ---------------------------------------------------------------------------
 # Export dataset
@@ -137,7 +137,7 @@ lines2, labels2 = ax2.get_legend_handles_labels()
 ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left",
            frameon=False, fontsize=8)
 
-ax1.set_title("AAPL Price vs Federal Funds Rate (2015–2024)",
+ax1.set_title("AAPL Price vs Federal Funds Rate (2015–2025)",
               fontsize=11, color=DARK, pad=14, loc="left")
 
 plt.tight_layout()
@@ -158,7 +158,7 @@ TICKERS = ["AAPL", "GOOGL", "AMZN", "MSFT", "META"]
 print("\nDownloading big tech data...")
 prices = {}
 for ticker in TICKERS:
-    prices[ticker] = get_close(ticker, start="2015-01-01", end="2024-12-31")
+    prices[ticker] = get_close(ticker, start="2015-01-01", end="2025-12-31")
     print(f"  {ticker}: {len(prices[ticker])} trading days")
 
 # Align all series to a common index (AAPL as reference)
@@ -226,7 +226,7 @@ ax1.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
 lines2, labels2 = ax2.get_legend_handles_labels()
 ax1.legend(lines2, labels2, loc="upper left", frameon=False, fontsize=8)
 
-ax1.set_title("Big Tech Normalized Performance vs Federal Funds Rate (2015–2024)\nBase = 100 at Jan 2015",
+ax1.set_title("Big Tech Normalized Performance vs Federal Funds Rate (2015–2025)\nBase = 100 at Jan 2015",
               fontsize=11, color=DARK, pad=14, loc="left")
 
 plt.tight_layout()
@@ -244,7 +244,7 @@ print("Chart saved: data/01c_bigtech_vs_fed.png")
 # When safe assets yield nothing, all risk assets rise. When they yield 5%, money leaves.
 
 print("\nDownloading S&P 500 data...")
-sp500 = get_close("^GSPC", start="2015-01-01", end="2024-12-31")
+sp500 = get_close("^GSPC", start="2015-01-01", end="2025-12-31")
 sp500_norm = (sp500 / sp500.iloc[0]) * 100
 
 # Export dataset
@@ -308,7 +308,7 @@ lines1, labels1 = ax1.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
 ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left", frameon=False, fontsize=8)
 
-ax1.set_title("S&P 500 vs Federal Funds Rate (2015–2024)\nThe entire U.S. market follows the same pattern",
+ax1.set_title("S&P 500 vs Federal Funds Rate (2015–2025)\nThe entire U.S. market follows the same pattern",
               fontsize=11, color=DARK, pad=14, loc="left")
 
 plt.tight_layout()
