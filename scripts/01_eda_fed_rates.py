@@ -129,6 +129,7 @@ for date, label in KEY_EVENTS:
 ax1.xaxis.set_major_locator(mdates.YearLocator())
 ax1.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
 ax1.set_xlim(close.index[0], close.index[-1])
+ax1.set_xlabel("Date")
 
 # Legend
 lines1, labels1 = ax1.get_legend_handles_labels()
@@ -201,6 +202,7 @@ ax1.set_ylim(0, normalized.max().max() * 1.15)
 
 # Extend x-axis to give room for the end labels
 ax1.set_xlim(common_index[0], common_index[-1] + pd.Timedelta(days=200))
+ax1.set_xlabel("Date")
 
 # Fed rate — orange, right axis
 ax2 = ax1.twinx()
@@ -299,6 +301,7 @@ for date, label in KEY_EVENTS:
 ax1.xaxis.set_major_locator(mdates.YearLocator())
 ax1.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
 ax1.set_xlim(sp500.index[0], sp500.index[-1])
+ax1.set_xlabel("Date")
 
 # Legend
 lines1, labels1 = ax1.get_legend_handles_labels()
