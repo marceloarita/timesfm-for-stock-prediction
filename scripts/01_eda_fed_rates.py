@@ -82,20 +82,22 @@ print(dataset.head(10).to_string(index=False))
 # ---------------------------------------------------------------------------
 fig, ax1 = plt.subplots(figsize=(13, 5))
 fig.patch.set_facecolor("white")
+fig.patch.set_linewidth(1)
+fig.patch.set_edgecolor(LIGHT_GRAY)
 ax1.set_facecolor("white")
 
 for spine in ["top", "right", "left"]:
     ax1.spines[spine].set_visible(False)
 ax1.spines["bottom"].set_color(LIGHT_GRAY)
-ax1.tick_params(axis="both", length=0)
+ax1.tick_params(axis="both", length=0, labelcolor=DARK)
 ax1.yaxis.grid(True, color=LIGHT_GRAY, linewidth=0.6)
 ax1.set_axisbelow(True)
 
 # AAPL price — gray, fills the area for visual weight
 ax1.fill_between(close.index, close.values, alpha=0.15, color=GRAY)
 ax1.plot(close.index, close.values, color=GRAY, linewidth=1.0, label="AAPL Close Price")
-ax1.set_ylabel("AAPL Price (USD)", color=GRAY, fontsize=8)
-ax1.tick_params(axis="y", labelcolor=GRAY)
+ax1.set_ylabel("AAPL Price (USD)", color=DARK, fontsize=8)
+ax1.tick_params(axis="y", labelcolor=DARK)
 ax1.set_ylim(0, close.max() * 1.2)
 
 # Fed rate — orange, secondary axis
@@ -103,13 +105,13 @@ ax2 = ax1.twinx()
 for spine in ["top", "left", "bottom"]:
     ax2.spines[spine].set_visible(False)
 ax2.spines["right"].set_color(LIGHT_GRAY)
-ax2.tick_params(axis="both", length=0)
+ax2.tick_params(axis="both", length=0, labelcolor=DARK)
 ax2.grid(False)
 
 ax2.fill_between(fed.index, 0, fed["rate"], alpha=0.2, color=ORANGE)
 ax2.plot(fed.index, fed["rate"], color=ORANGE, linewidth=1.0, label="Fed Funds Rate (%)")
-ax2.set_ylabel("Fed Funds Rate (%)", color=ORANGE, fontsize=8)
-ax2.tick_params(axis="y", labelcolor=ORANGE)
+ax2.set_ylabel("Fed Funds Rate (%)", color=DARK, fontsize=8)
+ax2.tick_params(axis="y", labelcolor=DARK)
 ax2.set_ylim(0, fed["rate"].max() * 2.5)
 
 # Vertical dashed lines marking key Fed moments
@@ -140,8 +142,9 @@ ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left",
 ax1.set_title("AAPL Price vs Federal Funds Rate (2015–2025)",
               fontsize=11, color=DARK, pad=14, loc="left")
 
-plt.tight_layout()
-plt.savefig(os.path.join(CHARTS_DIR, "01b_aapl_vs_fed_rates.png"), dpi=150, bbox_inches="tight")
+plt.tight_layout(pad=1.5)
+plt.savefig(os.path.join(CHARTS_DIR, "01b_aapl_vs_fed_rates.png"), dpi=150,
+            bbox_inches="tight", facecolor=fig.get_facecolor(), edgecolor=LIGHT_GRAY)
 plt.show()
 print("Chart saved: data/01b_aapl_vs_fed_rates.png")
 
@@ -184,7 +187,7 @@ ax1.set_facecolor("white")
 for spine in ["top", "right", "left"]:
     ax1.spines[spine].set_visible(False)
 ax1.spines["bottom"].set_color(LIGHT_GRAY)
-ax1.tick_params(axis="both", length=0)
+ax1.tick_params(axis="both", length=0, labelcolor=DARK)
 ax1.yaxis.grid(True, color=LIGHT_GRAY, linewidth=0.6)
 ax1.set_axisbelow(True)
 
@@ -197,7 +200,7 @@ for ticker in TICKERS:
              color=TECH_COLORS[ticker], fontsize=7.5, va="center")
 
 ax1.set_ylabel("Normalized Price (Base = 100)", color=DARK, fontsize=8)
-ax1.tick_params(axis="y", labelcolor=GRAY)
+ax1.tick_params(axis="y", labelcolor=DARK)
 ax1.set_ylim(0, normalized.max().max() * 1.15)
 
 # Extend x-axis to give room for the end labels
@@ -266,15 +269,15 @@ ax1.set_facecolor("white")
 for spine in ["top", "right", "left"]:
     ax1.spines[spine].set_visible(False)
 ax1.spines["bottom"].set_color(LIGHT_GRAY)
-ax1.tick_params(axis="both", length=0)
+ax1.tick_params(axis="both", length=0, labelcolor=DARK)
 ax1.yaxis.grid(True, color=LIGHT_GRAY, linewidth=0.6)
 ax1.set_axisbelow(True)
 
 # S&P 500 normalized — gray area
 ax1.fill_between(sp500_norm.index, sp500_norm.values, alpha=0.12, color=GRAY)
 ax1.plot(sp500_norm.index, sp500_norm.values, color=GRAY, linewidth=1.0, label="S&P 500 (normalized)")
-ax1.set_ylabel("Normalized Price (Base = 100)", color=GRAY, fontsize=8)
-ax1.tick_params(axis="y", labelcolor=GRAY)
+ax1.set_ylabel("Normalized Price (Base = 100)", color=DARK, fontsize=8)
+ax1.tick_params(axis="y", labelcolor=DARK)
 ax1.set_ylim(0, sp500_norm.max() * 1.2)
 
 # Fed rate — orange, right axis
