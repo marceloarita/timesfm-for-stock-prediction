@@ -211,3 +211,4 @@ data/**/*.csv
 data/**/*.png
 data/.DS_Store
 *.png
+.claude/
